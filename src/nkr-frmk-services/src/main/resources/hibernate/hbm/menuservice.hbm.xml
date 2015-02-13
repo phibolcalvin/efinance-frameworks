@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+
+    <query name="find.all.menu.items.by.menu">
+        <![CDATA[
+			select mi
+			from MenuItemEntity mi
+			where mi.menu.code = ?
+			and mi.parent is null
+			order by mi.id
+	    ]]>
+    </query>
+
+    <query name="find.all.menus">
+        <![CDATA[
+			select m
+			from MenuEntity m
+			left join fetch
+				 m.menuType
+			order by m.id
+	    ]]>
+    </query>
+
+    <query name="find.menu.by.key">
+        <![CDATA[
+			select m
+			from MenuEntity m
+			where m.code=?
+	    ]]>
+    </query>
+
+    <query name="find.menu.item.by.event">
+        <![CDATA[
+			select mi
+			from MenuItemEntity mi
+			where mi.action = ?
+	    ]]>
+    </query>
+
+
+</hibernate-mapping>
+

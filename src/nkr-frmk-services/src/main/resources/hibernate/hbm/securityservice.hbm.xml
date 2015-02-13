@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<query name="find.all.users">
+		<![CDATA[
+		from SecUser a
+		]]>
+	</query>
+
+	<query name="find.user.by.id">
+		<![CDATA[
+			   from SecUser a
+			   where a.id = :id
+		]]>
+	</query>
+
+    <query name="find.user.by.username">
+        <![CDATA[
+			   from SecUser a
+			   where UPPER(a.login) = UPPER(:username)
+	    ]]>
+    </query>
+
+    <query name="find.user.active.by.username">
+        <![CDATA[
+			   from SecUser a
+			   where UPPER(a.login) = UPPER(?)
+	    ]]>
+    </query>
+	<query name="find.user.active.by.username.active">
+        <![CDATA[
+			   from SecUser a
+			   where UPPER(a.login) = UPPER(?) and a.statusRecord = 'ACTIV'
+	    ]]>
+    </query>
+
+    <query name="find.profile.by.procode">
+        <![CDATA[
+			   from SecProfile a
+			   where UPPER(a.code) = UPPER(?)
+	    ]]>
+    </query>
+	
+	<query name="find.profiles.by.userid">
+        <![CDATA[
+			   select profiles from SecUser a
+			   join a.profiles profiles
+			   where a.id = ?
+	    ]]>
+    </query>
+
+
+</hibernate-mapping>

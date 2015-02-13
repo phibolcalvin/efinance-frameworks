@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 
+	<modelVersion>4.0.0</modelVersion>
+    <groupId>com.nokor.frmk</groupId>
+    <artifactId>nkr-frmk-finance</artifactId>
+    <packaging>jar</packaging>
+    <name>Nokor Framework Finance</name>
+    <description>Nokor Framework Finance</description>
+	<version>1.6.1</version>
+
+	<parent>
+		<groupId>com.nokor.frmk</groupId>
+		<artifactId>nkr-frmk-parent</artifactId>
+		<version>1.6.1</version>
+	</parent>
+    
+	<repositories/> 
+
+	<scm/>
+
+	<properties/>
+
+    <dependencies>
+		<dependency>
+			<groupId>com.nokor.frmk</groupId>
+			<artifactId>nkr-frmk-services</artifactId>
+		</dependency>
+    </dependencies>
+    <build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<outputDirectory>target/classes</outputDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+       
+	   <resources>
+			<resource>
+				<directory>src/main/resources/conf</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources/gwt</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources/spring</directory>
+			</resource>	
+			<resource>
+				<directory>src/main/resources/hibernate</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources/i18n</directory>
+			</resource>	
+		</resources>		
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources/conf</directory>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources/hibernate</directory>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources/i18n</directory>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources/spring</directory>
+			</testResource>
+		</testResources>
+		
+		<plugins>
+			<plugin>
+	        	<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				 <configuration>
+					 <source>1.7</source>
+					 <target>1.7</target>
+					 <encoding>UTF-8</encoding>
+        		</configuration>
+			</plugin>
+			<!-- <plugin>
+	        	<groupId>org.apache.maven.plugins</groupId>
+	        	<artifactId>maven-source-plugin</artifactId>
+	        	<version>2.2.1</version>
+	        	<executions>
+              		<execution>
+                		<id>attach-sources</id>
+                		<goals>
+                  			<goal>jar</goal>
+                		</goals>
+              		</execution>
+            	</executions>
+	      	</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.16</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+    	</plugins>
+	</build>
+</project>

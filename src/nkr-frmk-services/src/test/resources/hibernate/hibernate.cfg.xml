@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <!-- a SessionFactory instance listed as /jndi/name -->	
+	<session-factory>
+		<property name="configurationClass">org.hibernate.cfg.AnnotationConfiguration</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<!--<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>-->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.use_sql_comments">true</property>
+		<!-- <property name="hibernate.use_outer_join">true</property> -->
+		
+		<!-- validate | update | create | create-drop  -->
+		<property name="hbm2ddl.auto">update</property>
+		
+   		<property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+   		<property name="hibernate.jdbc_use_scrollable_resultset">true</property>
+		<property name="hibernate.jdbc.fetch_size">50</property>
+		<property name="hibernate.jdbc.batch_size">20</property>
+		<property name="hibernate.jdbc.use_get_generated_keys">true</property>
+		<property name="hibernate.bytecode.use_reflection_optimizer">true</property>
+		<property name="hibernate.query.substitutions">true 1, false 0</property>
+		<property name="hibernate.connection.zeroDateTimeBehavior">convertToNull</property>	
+		<property name="hibernate.connection.charSet">UTF-8</property>
+		
+		<!-- Framework mapping entities -->
+		<mapping class="com.nokor.frmk.ui.menu.model.MenuEntity"/>
+		<mapping class="com.nokor.frmk.ui.menu.model.MenuItemEntity"/>
+		<mapping class="com.nokor.frmk.ui.menu.model.TypeMenu"/>
+		
+		<mapping class="com.nokor.frmk.security.model.SecUser"/>
+		<mapping class="com.nokor.frmk.security.model.SecApplication"/>
+		<mapping class="com.nokor.frmk.security.model.SecProfile"/>
+		<mapping class="com.nokor.frmk.security.model.SecPrivilege"/>
+		<mapping class="com.nokor.frmk.security.model.SecPage"/>
+		<mapping class="com.nokor.frmk.security.model.SecControl"/>
+		<mapping class="com.nokor.frmk.security.model.SecApplicationUserProfile"/>
+		<mapping class="com.nokor.frmk.security.model.SecPageProfilePrivilege"/>
+		<mapping class="com.nokor.frmk.security.model.SecControlProfilePrivilege"/>
+		<mapping class="com.nokor.frmk.model.config.SettingConfig"/>
+		
+		<mapping class="com.nokor.frmk.model.refdata.RefTable"/>
+		<mapping class="com.nokor.frmk.model.config.SettingConfig"/>
+		<mapping class="com.nokor.frmk.model.t9n.LocaleType"/>
+		<mapping class="com.nokor.frmk.model.t9n.Translation"/>
+		<mapping class="com.nokor.frmk.model.t9n.TranslationText"/>
+		
+		<mapping class="com.nokor.frmk.model.scheduler.Scheduler"/>
+		<mapping class="com.nokor.frmk.model.scheduler.SchedulerTask"/>
+		<mapping class="com.nokor.frmk.model.scheduler.SchedulerTimeUnit"/>
+		
+	</session-factory>
+</hibernate-configuration>

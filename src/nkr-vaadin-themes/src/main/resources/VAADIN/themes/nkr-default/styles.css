@@ -1,0 +1,6 @@
+@import "../reindeer/legacy-styles.css";
+
+@import "widget/sidebar.css";
+@import "widget/wizards.css";
+@import "widget/label.css";
+@import "widget/loading-indicator.css";

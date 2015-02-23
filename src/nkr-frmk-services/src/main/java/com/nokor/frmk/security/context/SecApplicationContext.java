@@ -313,7 +313,7 @@ public class SecApplicationContext implements SecApplicationContextAware {
 			return true;
 		} else if (currentDevice.isTablet()) {
 			logger.debug("**SPRING**DEVICE IS TABLET* userAgent [" + userAgent + "]*************");
-			return false;
+			return true;
 		} else {
 			logger.debug("**SPRING**DEVICE IS NORMAL* userAgent [" + userAgent + "]*************");
 			return false;

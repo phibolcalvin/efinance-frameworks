@@ -91,7 +91,7 @@ public class SimplePagedTable<T extends Entity> extends AbstractPagedTable<T> {
         } else if (value instanceof Amount) {
         	Amount amountValue = (Amount) value;
         	if (amountValue != null && amountValue.getTiAmountUsd() != null) {
-        		return AmountUtils.format(amountValue.getTiAmountUsd());
+        		return AmountUtils.format(amountValue.getTiAmountUsd(), amountValue.getNbDecimal());
         	}
         	return null;
         }

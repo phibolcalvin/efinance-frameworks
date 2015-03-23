@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,7 +38,7 @@ public class ExcelFileBuilder extends FileBuilder {
     private Cell cell;
     private CellStyle dateCellStyle;
     private CellStyle boldStyle;
-    private CellStyle amountCellStyle;
+    private Map<Integer, CellStyle> amountCellStyles = new HashMap<>();
 
     public ExcelFileBuilder(Container container) {
         super(container);
@@ -86,7 +88,6 @@ public class ExcelFileBuilder extends FileBuilder {
             cell.setCellType(Cell.CELL_TYPE_BOOLEAN);
         } else if (value instanceof Date) {
             cell.setCellValue((Date) value);
-            DataFormat format = workbook.createDataFormat();
 			cell.setCellStyle(getDateCellStyle());
             cell.setCellType(Cell.CELL_TYPE_NUMERIC);
         } else if (value instanceof Calendar) {
@@ -101,7 +102,7 @@ public class ExcelFileBuilder extends FileBuilder {
         	if (amountValue != null && amountValue.getTiAmountUsd() != null) {
         		cell.setCellValue(amountValue.getTiAmountUsd());
         	}
-            cell.setCellStyle(getAmountCellStyle());
+        	cell.setCellStyle(getAmountCellStyle(amountValue.getNbDecimal()));
             cell.setCellType(Cell.CELL_TYPE_NUMERIC);
         } else {
             cell.setCellValue(value.toString());
@@ -137,11 +138,21 @@ public class ExcelFileBuilder extends FileBuilder {
     }
     
     public CellStyle getAmountCellStyle() {
+        return getAmountCellStyle(2);
+    }
+    
+    public CellStyle getAmountCellStyle(int nbDecimal) {
+    	CellStyle amountCellStyle = amountCellStyles.get(nbDecimal);
         if (amountCellStyle == null) {
         	DataFormat format = workbook.createDataFormat();
             amountCellStyle = workbook.createCellStyle();
             amountCellStyle.setAlignment(CellStyle.ALIGN_RIGHT);
-            amountCellStyle.setDataFormat(format.getFormat("#,##0.00"));
+            String formatString = "#,##0.";
+			for (int i = 0; i < nbDecimal; i++) {
+				formatString += "0";
+			}
+            amountCellStyle.setDataFormat(format.getFormat(formatString));
+            amountCellStyles.put(nbDecimal, amountCellStyle);
         }
         return amountCellStyle;
     }
@@ -185,6 +196,6 @@ public class ExcelFileBuilder extends FileBuilder {
         cell = null;
         dateCellStyle = null;
         boldStyle = null;
-        amountCellStyle = null;
+        amountCellStyles = new HashMap<>();;
     }
 }

@@ -14,6 +14,7 @@ public class Amount implements Serializable {
 	private Double tiAmountUsd;
 	private Double vatAmountUsd;
 	private Double teAmountUsd;
+	private int nbDecimal = 2;
 	
 	public Amount() {
 		
@@ -25,9 +26,19 @@ public class Amount implements Serializable {
 	 * @param tiAmountUsd
 	 */
 	public Amount(Double teAmountUsd, Double vatAmountUsd, Double tiAmountUsd) {
+		this(teAmountUsd, vatAmountUsd, tiAmountUsd, 2);
+	}
+	
+	/**
+	 * @param teAmountUsd
+	 * @param vatAmountUsd
+	 * @param tiAmountUsd
+	 */
+	public Amount(Double teAmountUsd, Double vatAmountUsd, Double tiAmountUsd, int nbDecimal) {
 		this.teAmountUsd = teAmountUsd;
 		this.vatAmountUsd = vatAmountUsd;
 		this.tiAmountUsd = tiAmountUsd;
+		this.nbDecimal = nbDecimal;
 	}
 	
 	/**
@@ -91,6 +102,20 @@ public class Amount implements Serializable {
 	 */
 	public void plusVatAmountUsd(Double vatAmountUsd) {
 		this.vatAmountUsd = DoubleUtils.getDouble(this.vatAmountUsd) + DoubleUtils.getDouble(vatAmountUsd);
+	}
+	
+	/**
+	 * @return the nbDecimal
+	 */
+	public int getNbDecimal() {
+		return nbDecimal;
+	}
+
+	/**
+	 * @param nbDecimal the nbDecimal to set
+	 */
+	public void setNbDecimal(int nbDecimal) {
+		this.nbDecimal = nbDecimal;
 	}
 	
 	/**

@@ -12,6 +12,7 @@ import org.seuksa.frmk.tools.amount.AmountUtils;
 
 import com.nokor.frmk.vaadin.ui.widget.table.ColumnDefinition;
 import com.nokor.frmk.vaadin.ui.widget.table.PagedTableContainer;
+import com.nokor.frmk.vaadin.ui.widget.table.PropertyColumnRenderer;
 import com.nokor.frmk.vaadin.ui.widget.table.event.PagedTableChangeEvent;
 import com.nokor.frmk.vaadin.ui.widget.table.listener.PageChangeListener;
 import com.nokor.frmk.vaadin.util.exporter.CSVExporter;
@@ -42,6 +43,7 @@ public class SimplePagedTable<T extends Entity> extends AbstractPagedTable<T> {
 
     private List<PageChangeListener<T>> listeners = null;
     private PagedTableContainer container;
+    private List<ColumnDefinition> columns;
 
     /**
      * @param columns
@@ -56,6 +58,7 @@ public class SimplePagedTable<T extends Entity> extends AbstractPagedTable<T> {
      */
     public SimplePagedTable(String caption, List<ColumnDefinition> columns) {
         super(caption);
+        this.columns = columns;
         setPageLength(10);
         addStyleName("pagedtable");
         setWidth("100%");
@@ -84,18 +87,38 @@ public class SimplePagedTable<T extends Entity> extends AbstractPagedTable<T> {
     @Override
     @SuppressWarnings("rawtypes") 
     protected String formatPropertyValue(Object rowId, Object colId, Property property) {
-        Object value = property.getValue();
-        if (value instanceof Date) {
-            Date dateValue = (Date) value;
-            return new SimpleDateFormat(DateUtils.FORMAT_DDMMYYYY_SLASH).format(dateValue);
-        } else if (value instanceof Amount) {
-        	Amount amountValue = (Amount) value;
-        	if (amountValue != null && amountValue.getTiAmountUsd() != null) {
-        		return AmountUtils.format(amountValue.getTiAmountUsd(), amountValue.getNbDecimal());
-        	}
-        	return null;
-        }
-        return super.formatPropertyValue(rowId, colId, property);
+    	ColumnDefinition columnDefinition = getColumnDefinition(colId.toString());
+    	if (columnDefinition != null && columnDefinition.getColumnRenderer() != null
+    			&& columnDefinition.getColumnRenderer() instanceof PropertyColumnRenderer) {
+    		((PropertyColumnRenderer) columnDefinition.getColumnRenderer()).setPropertyValue(property.getValue());
+    		return String.valueOf(columnDefinition.getColumnRenderer().getValue());
+    	} else {    	
+	        Object value = property.getValue();
+	        if (value instanceof Date) {
+	            Date dateValue = (Date) value;
+	            return new SimpleDateFormat(DateUtils.FORMAT_DDMMYYYY_SLASH).format(dateValue);
+	        } else if (value instanceof Amount) {
+	        	Amount amountValue = (Amount) value;
+	        	if (amountValue != null && amountValue.getTiAmountUsd() != null) {
+	        		return AmountUtils.format(amountValue.getTiAmountUsd(), amountValue.getNbDecimal());
+	        	}
+	        	return null;
+	        }
+	        return super.formatPropertyValue(rowId, colId, property);
+    	}
+    }
+    
+    /**
+     * @param propertyId
+     * @return
+     */
+    private ColumnDefinition getColumnDefinition(String propertyId) {
+    	for (ColumnDefinition columnDefinition : columns) {
+    		if (columnDefinition.getPropertyId().equals(propertyId)) {
+    			return columnDefinition;
+    		}
+    	}
+    	return null;
     }
     
     /**

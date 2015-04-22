@@ -97,9 +97,11 @@
 		<module>nkr-frmk-services-seuksa</module>
 		<module>nkr-frmk-services</module>
 		<module>nkr-frmk-finance</module>
+		<module>nkr-frmk-notification</module>
 		<module>nkr-frmk-vaadin-components</module>
 		<module>nkr-frmk-vaadin</module>
-		<module>nkr-vaadin-themes</module>	</modules>
+		<module>nkr-vaadin-themes</module>
+	</modules>
    	
 
 	<repositories>

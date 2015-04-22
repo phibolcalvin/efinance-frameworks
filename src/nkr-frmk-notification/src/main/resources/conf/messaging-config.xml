@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<messaging>
+		<sms>
+			<apikey>59b23be7</apikey>
+			<apisecret>7afcb6b4</apisecret>
+			<smsfrom>0085577924040</smsfrom>
+		</sms>
+		<mail>
+			<active>true</active>
+			<smtpserver>mail.nokor-group.com</smtpserver>
+			<smtpport></smtpport>
+			<username></username>
+			<password></password>
+		</mail>
+	</messaging>
+</configuration>

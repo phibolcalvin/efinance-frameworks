@@ -27,7 +27,7 @@ public final class LoanUtils {
 			numberOfPeriods = termInMonth;
 			break;
 		case Q:
-			numberOfPeriods = termInMonth / 4;
+			numberOfPeriods = termInMonth / 3;
 			break;
 		case H:
 			numberOfPeriods = termInMonth / 6;
@@ -53,7 +53,7 @@ public final class LoanUtils {
 			nbOfMonths = 1;
 			break;
 		case Q:
-			nbOfMonths = 4;
+			nbOfMonths = 3;
 			break;
 		case H:
 			nbOfMonths = 6;

@@ -10,6 +10,7 @@ import com.nokor.finance.services.Calculator;
 import com.nokor.finance.services.shared.AmortizationSchedules;
 import com.nokor.finance.services.shared.CalculationParameter;
 import com.nokor.finance.services.shared.Schedule;
+import com.nokor.finance.services.shared.system.Frequency;
 import com.nokor.finance.services.tools.LoanUtils;
 
 /**
@@ -30,7 +31,7 @@ public class GLFCalculatorImpl implements Calculator {
 		double periodicInterestRate = calculationParameter.getPeriodicInterestRate();
 		int numberOfPeriods = calculationParameter.getNumberOfPeriods() - calculationParameter.getNumberOfPrincipalGracePeriods();
 		
-		double totalInterest = initialPrincipal * periodicInterestRate * numberOfPeriods;
+		double totalInterest = Frequency.getNbMonth(calculationParameter.getFrequency()) * initialPrincipal * periodicInterestRate * numberOfPeriods;
 		
 		double installmentPayment = (initialPrincipal + totalInterest) / numberOfPeriods;
 		

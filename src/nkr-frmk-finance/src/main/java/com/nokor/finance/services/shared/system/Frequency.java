@@ -55,7 +55,7 @@ public enum Frequency implements ISysRefData {
     	frequencies.add(H);
     	frequencies.add(M);
     	frequencies.add(Q);
-    	//frequencies.add(W);
+    	frequencies.add(W);
     	return frequencies;
     }
     
@@ -70,6 +70,7 @@ public enum Frequency implements ISysRefData {
 		case H:
 			return 6;
 		case M:
+		case W:
 			return 1;
 		case Q:
 			return 3;

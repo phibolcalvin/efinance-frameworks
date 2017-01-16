@@ -21,7 +21,7 @@ public final class LoanUtils {
 			numberOfPeriods = termInMonth * 30;
 			break;
 		case W:
-			numberOfPeriods = termInMonth * 4;
+			numberOfPeriods = (int) Math.round(termInMonth * 4.35);
 			break;
 		case M:
 			numberOfPeriods = termInMonth;
@@ -50,6 +50,7 @@ public final class LoanUtils {
 		int nbOfMonths = 0;
 		switch (frequency) {
 		case M:
+		case W:
 			nbOfMonths = 1;
 			break;
 		case Q:
@@ -61,8 +62,7 @@ public final class LoanUtils {
 		case A:
 			nbOfMonths = 12;
 			break;
-		case D:
-		case W:
+		case D:		
 		default:
 			throw new IllegalArgumentException("Operation not allowed");
 		}

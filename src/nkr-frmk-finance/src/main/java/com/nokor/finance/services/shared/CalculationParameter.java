@@ -1,6 +1,9 @@
 package com.nokor.finance.services.shared;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.seuksa.frmk.tools.type.Month;
 
 import com.nokor.finance.services.shared.system.Frequency;
 
@@ -31,6 +34,10 @@ public class CalculationParameter implements Serializable {
 	private double registrationFee;
 	/** Insurance fee */
 	private double servicingFee;
+	
+	private boolean hybrid;
+	private Double minPaymentHybridAmount;
+	private List<Month> months;
 		
 	/**
 	 * @return the assetPrice
@@ -139,5 +146,42 @@ public class CalculationParameter implements Serializable {
 	 */
 	public void setNumberOfPrincipalGracePeriods(int numberOfPrincipalGracePeriods) {
 		this.numberOfPrincipalGracePeriods = numberOfPrincipalGracePeriods;
+	}
+	/**
+	 * @return the hybrid
+	 */
+	public boolean isHybrid() {
+		return hybrid;
+	}
+	/**
+	 * @param hybrid the hybrid to set
+	 */
+	public void setHybrid(boolean hybrid) {
+		this.hybrid = hybrid;
+	}
+	/**
+	 * @return the minPaymentHybridAmount
+	 */
+	public Double getMinPaymentHybridAmount() {
+		return minPaymentHybridAmount;
+	}
+	/**
+	 * @param minPaymentHybridAmount the minPaymentHybridAmount to set
+	 */
+	public void setMinPaymentHybridAmount(Double minPaymentHybridAmount) {
+		this.minPaymentHybridAmount = minPaymentHybridAmount;
+	}
+	/**
+	 * @return the months
+	 */
+	public List<Month> getMonths() {
+		return months;
+	}
+	/**
+	 * @param months the months to set
+	 */
+	public void setMonths(List<Month> months) {
+		this.months = months;
 	}	
+	
 }

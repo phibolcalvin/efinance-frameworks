@@ -12,6 +12,8 @@ public class Schedule implements Serializable {
 	private static final long serialVersionUID = 8399679891906367528L;
 	
 	private int n;
+	private int originNCap;
+	private int originNIap;
 	private double installmentPayment;
 	private double interestAmount;
 	private double principalAmount;
@@ -31,6 +33,30 @@ public class Schedule implements Serializable {
 	 */
 	public void setN(int n) {
 		this.n = n;
+	}
+	/**
+	 * @return the originNCap
+	 */
+	public int getOriginNCap() {
+		return originNCap;
+	}
+	/**
+	 * @param originNCap the originNCap to set
+	 */
+	public void setOriginNCap(int originNCap) {
+		this.originNCap = originNCap;
+	}
+	/**
+	 * @return the originNIap
+	 */
+	public int getOriginNIap() {
+		return originNIap;
+	}
+	/**
+	 * @param originNIap the originNIap to set
+	 */
+	public void setOriginNIap(int originNIap) {
+		this.originNIap = originNIap;
 	}
 	/**
 	 * @return the installmentPayment

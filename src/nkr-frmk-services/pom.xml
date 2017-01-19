@@ -9,12 +9,12 @@
     <packaging>jar</packaging>
     <name>Nokor Framework Services</name>
     <description>Nokor Framework Services</description>
-	<version>1.6.1</version>
+	<version>1.6.2</version>
 
 	<parent>
 		<groupId>com.nokor.frmk</groupId>
 		<artifactId>nkr-frmk-parent</artifactId>
-		<version>1.6.1</version>
+		<version>1.6.2</version>
 	</parent>
     
 	<!--

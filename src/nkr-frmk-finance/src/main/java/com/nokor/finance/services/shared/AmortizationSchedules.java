@@ -107,6 +107,8 @@ public class AmortizationSchedules implements Serializable {
 		String output = "";
 	
 		output += StringUtils.rightPad("No.", 5);
+		output += StringUtils.rightPad("CAP", 5);
+		output += StringUtils.rightPad("IAP", 5);
 		output += "|" + StringUtils.rightPad("Date.", 15);
 		output += "|" + StringUtils.rightPad("Start Date.", 15);
 		output += "|" + StringUtils.rightPad("End Date.", 15);
@@ -116,6 +118,9 @@ public class AmortizationSchedules implements Serializable {
 		output += "|" + StringUtils.leftPad("Balance.", 15);
 		output += "\n";
 		output += StringUtils.rightPad("", 5);
+		output += StringUtils.rightPad("", 5);
+		output += StringUtils.rightPad("", 5);
+		output += "|" + StringUtils.rightPad("", 15);
 		output += "|" + StringUtils.rightPad("", 15);
 		output += "|" + StringUtils.rightPad("", 15);
 		output += "|" + StringUtils.rightPad("", 15);
@@ -127,6 +132,8 @@ public class AmortizationSchedules implements Serializable {
 		
 		for (Schedule schedule : schedules) {
 			output += StringUtils.rightPad(String.valueOf(schedule.getN()), 5);
+			output += StringUtils.rightPad(String.valueOf(schedule.getOriginNCap()), 5);
+			output += StringUtils.rightPad(String.valueOf(schedule.getOriginNIap()), 5);
 			output += "|" + StringUtils.rightPad(DateUtils.date2StringDDMMYYYY_SLASH(schedule.getInstallmentDate()), 15);
 			output += "|" + StringUtils.rightPad(DateUtils.date2StringDDMMYYYY_SLASH(schedule.getPeriodStartDate()), 15);
 			output += "|" + StringUtils.rightPad(DateUtils.date2StringDDMMYYYY_SLASH(schedule.getPeriodEndDate()), 15);

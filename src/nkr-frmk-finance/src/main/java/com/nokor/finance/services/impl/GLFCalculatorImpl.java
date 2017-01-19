@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.SerializationUtils;
 import org.seuksa.frmk.tools.DateUtils;
+import org.seuksa.frmk.tools.type.Month;
 
 import com.nokor.finance.services.Calculator;
 import com.nokor.finance.services.shared.AmortizationSchedules;
@@ -127,7 +129,269 @@ public class GLFCalculatorImpl implements Calculator {
 		
 		amortizationSchedules.setIrrRate(irrRate);
 		amortizationSchedules.setSchedules(schedules);
+		return recalculateHybridAmortizationSchedules(amortizationSchedules);
+	}
+	
+	/**
+	 * 
+	 * @param months
+	 * @param oldSchedules
+	 * @return
+	 */
+	private List<Schedule> convertScheduleByMonthOfPayments(List<Month> months, List<Schedule> oldSchedules) {
+		List<Schedule> newSchedules = new ArrayList<Schedule>();
+		if (months != null && !months.isEmpty()) {
+			if (!oldSchedules.isEmpty()) {
+				int monthIndex = 0;
+				Date firstInstallmentDate = null;
+				Date installmentDate = null;
+				for (int i = 0; i < oldSchedules.size(); i++) {
+					Schedule newSchedule = (Schedule) SerializationUtils.clone(oldSchedules.get(i));
+					newSchedule.setOriginNCap(oldSchedules.get(i).getN());
+					newSchedule.setOriginNIap(oldSchedules.get(i).getN());
+					newSchedules.add(newSchedule);
+					
+					if (i == 0) {
+						firstInstallmentDate = oldSchedules.get(0).getInstallmentDate();
+						newSchedule.setInstallmentDate(firstInstallmentDate);
+					} else {
+						installmentDate = DateUtils.addMonthsDate(firstInstallmentDate, getNbMonths(oldSchedules.get(0).getInstallmentDate(), months).get(monthIndex));
+						newSchedule.setInstallmentDate(installmentDate);
+						firstInstallmentDate = installmentDate;
+						
+						if (monthIndex == getNbMonths(oldSchedules.get(0).getInstallmentDate(), months).size() -1) {
+							monthIndex = 0;
+						} else {
+							monthIndex++;
+						}
+					}
+					
+					int nbBetwenTwoDate = 1;
+					if ((i + 1) <= oldSchedules.size()) {
+						if (i == 0) {
+							nbBetwenTwoDate = checkInstallmentDate(newSchedules.get(0).getPeriodStartDate(), 
+									newSchedules.get(0).getInstallmentDate());
+							nbBetwenTwoDate--;
+						} else {
+							nbBetwenTwoDate = checkInstallmentDate(newSchedules.get(i - 1).getInstallmentDate(), 
+									newSchedule.getInstallmentDate());
+						}
+					}
+					
+					newSchedule.setPeriodStartDate(DateUtils.addMonthsDate(newSchedule.getInstallmentDate(), -1 * (nbBetwenTwoDate)));
+					newSchedule.setPeriodEndDate(DateUtils.addDaysDate(newSchedule.getInstallmentDate(), -1));
+				}
+			}
+			
+		}
+		return newSchedules;
+	}
+	
+	/**
+	 * 
+	 * @param firstInstallmentDate
+	 * @param months
+	 * @return
+	 */
+	private List<Integer> getNbMonths(Date firstInstallmentDate, List<Month> months) {
+		List<Integer> nbMonths = new ArrayList<Integer>();
+		List<Month> sortMonths = new ArrayList<Month>();
+		int monthOfFirstInstallment = Integer.parseInt(DateUtils.getDateLabel(firstInstallmentDate, "M"));
+		for (int index = 0; index < months.size(); index++) {
+			if (monthOfFirstInstallment == months.get(index).getId() + 1) {
+				if (index == 0) {
+					sortMonths.addAll(months);
+				} else if (index == 1) {
+					if (months.size() == 4) {
+						sortMonths.add(months.get(index));
+						sortMonths.add(months.get(index + 1));
+						sortMonths.add(months.get(index + 2));
+						sortMonths.add(months.get(index - 1));
+					} else if (months.size() == 2) {
+						sortMonths.add(months.get(1));
+						sortMonths.add(months.get(0));
+					}
+				} else if (index == 2) {
+					sortMonths.add(months.get(index));
+					sortMonths.add(months.get(index + 1));
+					sortMonths.add(months.get(index - 2));
+					sortMonths.add(months.get(index - 1));
+				} else {
+					sortMonths.add(months.get(index));
+					sortMonths.add(months.get(index - 3));
+					sortMonths.add(months.get(index - 2));
+					sortMonths.add(months.get(index - 1));
+				}
+			}
+		}
+		Date nextYear = null;
+		for (int i = 0; i < sortMonths.size(); i++) {
+			int nbMonthCurrent = sortMonths.get(i).getId() + 1;
+			int nbMonthNext = 0;
+			if (i + 1 == sortMonths.size()) {
+				nbMonthNext = sortMonths.get(0).getId() + 1;
+			} else {
+				nbMonthNext = sortMonths.get(i + 1).getId() + 1;	
+			}
+			if (nbMonthNext <= nbMonthCurrent) {
+				String day = DateUtils.getDateLabel(firstInstallmentDate, "dd");
+				String year = DateUtils.getDateLabel(firstInstallmentDate, DateUtils.YEAR_FORMAT);
+				String month = String.valueOf(nbMonthCurrent);
+				Date currentMonth = DateUtils.getDate(day + "/" + month + "/" + year, DateUtils.FORMAT_DDMMYYYY_SLASH);
+				
+				String dayNext = DateUtils.getDateLabel(firstInstallmentDate, "dd");
+				String yearNext = DateUtils.getDateLabel(firstInstallmentDate, DateUtils.YEAR_FORMAT);
+				String monthNext = String.valueOf(nbMonthNext);
+				Date nextMonth = DateUtils.getDate(dayNext + "/" + monthNext + "/" + yearNext, DateUtils.FORMAT_DDMMYYYY_SLASH);
+				nextYear = DateUtils.addYearsDate(nextMonth, 1);
+				for (int j = 1; j < 13; j++) {
+					if (DateUtils.isSameDay(DateUtils.addMonthsDate(currentMonth, j), nextYear)) {
+						nbMonths.add(j);
+						break;
+					}
+				}
+			} else {
+				nbMonths.add(nbMonthNext - nbMonthCurrent);	
+			}
+		}
+		return nbMonths;
+	}
+	
+	/**
+	 * 
+	 * @param firstInstallmentDate
+	 * @param secondInstallmentDate
+	 * @return
+	 */
+	private int checkInstallmentDate(Date firstInstallmentDate, Date secondInstallmentDate) {
+		int nbBetween = 1;
+		for (int i = 1; i < 13; i++) {
+			if (DateUtils.isSameDay(DateUtils.addMonthsDate(firstInstallmentDate, i), secondInstallmentDate)) {
+				nbBetween = i;
+				break;
+			}
+		}
+		return nbBetween;
+	}
+	
+	/**
+	 * @param amortizationSchedules
+	 * @param calculationParameter
+	 * @param calculationParameter
+	 * @return
+	 */
+	private AmortizationSchedules recalculateHybridAmortizationSchedules(AmortizationSchedules amortizationSchedules) {
+		CalculationParameter calculationParameter = amortizationSchedules.getCalculationParameter();
+		double minPaymentHybridAmount = 0d;
+		if (calculationParameter.getMinPaymentHybridAmount() != null) {
+			minPaymentHybridAmount = calculationParameter.getMinPaymentHybridAmount();
+		}
+		List<Month> months = calculationParameter.getMonths();
+		if (calculationParameter.isHybrid() && (calculationParameter.getFrequency() == Frequency.H ||
+				calculationParameter.getFrequency() == Frequency.Q) && minPaymentHybridAmount > 0) {
+			
+			// List schedule after converted
+			List<Schedule> convertedSchedules = amortizationSchedules.getSchedules();
+			if (months != null && !months.isEmpty()) {
+				convertedSchedules = convertScheduleByMonthOfPayments(months, amortizationSchedules.getSchedules());
+			}
+			
+			List<Schedule> schedules = new ArrayList<Schedule>();
+			
+			int nbMonths = Frequency.getNbMonth(calculationParameter.getFrequency());
+			int installmentN = 1;
+			int monthIndex = 0;
+			for (Schedule oldSchedule : convertedSchedules) {
+				if (months != null && !months.isEmpty()) {
+					Date firstInstallmentDate = amortizationSchedules.getSchedules().get(0).getInstallmentDate();
+					if (installmentN == 1) {
+						Date firstContraStartDate = amortizationSchedules.getSchedules().get(0).getPeriodStartDate();
+						for (int j = 1; j < 13; j++) {
+							if (DateUtils.isSameDay(DateUtils.addMonthsDate(firstContraStartDate, j), firstInstallmentDate)) {
+								nbMonths = j;
+								break;
+							}
+						}
+					} else {
+						nbMonths = getNbMonths(firstInstallmentDate, months).get(monthIndex);
+						if (monthIndex == getNbMonths(firstInstallmentDate, months).size() -1) {
+							monthIndex = 0;
+						} else {
+							monthIndex++;
+						}
+					}	
+				}
+				
+				double totalPaidInterestAmount = 0d;
+				double totalPaidPrincipal = 0d;
+				for (int i = 0; i < nbMonths; i++) {
+					Schedule schedule = new Schedule();
+					schedule.setN(installmentN);
+					schedule.setOriginNCap(oldSchedule.getN());
+					schedule.setOriginNIap(oldSchedule.getN());
+					schedule.setInstallmentDate(DateUtils.addMonthsDate(oldSchedule.getInstallmentDate(), -1 * (nbMonths - (i + 1))));
+					schedule.setPeriodStartDate(DateUtils.addMonthsDate(schedule.getInstallmentDate(), -1));
+					schedule.setPeriodEndDate(DateUtils.addDaysDate(schedule.getInstallmentDate(), -1));
+
+					if (i == nbMonths - 1) {
+						double diffInterestAmount = oldSchedule.getInterestAmount() - totalPaidInterestAmount;
+						if (diffInterestAmount < 0) {
+							diffInterestAmount = 0d;
+						}
+						double diffPrincipalAmount = oldSchedule.getPrincipalAmount() - totalPaidPrincipal;
+						schedule.setBalanceAmount(oldSchedule.getBalanceAmount());
+						schedule.setPrincipalAmount(diffPrincipalAmount);
+						schedule.setInterestAmount(diffInterestAmount);
+					} else {
+						double interestAmount = 0d;
+						double diff = oldSchedule.getInterestAmount() - totalPaidInterestAmount;
+						if (diff < 0) {
+							diff = 0;
+						}
+						
+						if (diff > calculationParameter.getMinPaymentHybridAmount()) {
+							interestAmount = calculationParameter.getMinPaymentHybridAmount();
+						} else {
+							interestAmount = diff;
+						}
+						
+						double principalAmount = 0d;
+						double totalBalanceAmount = oldSchedule.getBalanceAmount() + oldSchedule.getPrincipalAmount();
+						if (checkMonthOfPayment(Integer.parseInt(DateUtils.getDateLabel(schedule.getInstallmentDate(), "M")), months)) {
+							principalAmount = oldSchedule.getPrincipalAmount();
+							totalPaidPrincipal += principalAmount;
+						}
+						schedule.setBalanceAmount(totalBalanceAmount - totalPaidPrincipal);
+						
+						totalPaidInterestAmount += interestAmount;
+						schedule.setInterestAmount(interestAmount);
+						schedule.setPrincipalAmount(principalAmount);
+					}
+					schedule.setInstallmentPayment(schedule.getPrincipalAmount() + schedule.getInterestAmount());
+					schedules.add(schedule);
+					installmentN++;
+				}
+			}
+			amortizationSchedules.setSchedules(schedules);
+		}
 		return amortizationSchedules;
+	}
+	
+	/**
+	 * 
+	 * @param scheduleInstallmentMonth
+	 * @param months
+	 * @return
+	 */
+	private boolean checkMonthOfPayment(int scheduleInstallmentMonth, List<Month> months) {
+		if (months != null && !months.isEmpty()) {
+			for (Month month : months) {
+				if (scheduleInstallmentMonth == month.getId() + 1) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**

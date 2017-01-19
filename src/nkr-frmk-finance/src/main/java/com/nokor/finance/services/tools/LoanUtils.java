@@ -1,5 +1,9 @@
 package com.nokor.finance.services.tools;
 
+import java.util.Date;
+
+import org.seuksa.frmk.tools.DateUtils;
+
 import com.nokor.finance.services.shared.system.Frequency;
 
 /**
@@ -67,5 +71,23 @@ public final class LoanUtils {
 			throw new IllegalArgumentException("Operation not allowed");
 		}
 		return nbOfMonths;
+	}
+	
+	/**
+	 * @param installmentDate
+	 * @param frequency
+	 * @return
+	 */
+	public static Date getNextInstallementDate(Date installmentDate, Frequency frequency) {
+		Date newInstallmentDate = null;
+		if (frequency == Frequency.W) {
+			newInstallmentDate = DateUtils.addDaysDate(installmentDate, 7);
+		} else if (frequency == Frequency.D) {
+			newInstallmentDate = DateUtils.addDaysDate(installmentDate, 1);
+		} else {
+			newInstallmentDate = DateUtils.addMonthsDate(installmentDate, 
+				LoanUtils.getNbOfMonth(frequency));
+		}
+		return newInstallmentDate;
 	}
 }

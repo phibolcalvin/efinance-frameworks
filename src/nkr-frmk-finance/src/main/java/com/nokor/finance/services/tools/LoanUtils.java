@@ -25,7 +25,7 @@ public final class LoanUtils {
 			numberOfPeriods = termInMonth * 30;
 			break;
 		case W:
-			numberOfPeriods = (int) Math.round(termInMonth * 4.35);
+			numberOfPeriods = termInMonth * 4;
 			break;
 		case M:
 			numberOfPeriods = termInMonth;

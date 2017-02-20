@@ -102,7 +102,7 @@ public abstract class AbstractControlPanel extends VerticalLayout {
 		boolean isValid = true;
 		if (StringUtils.isNotEmpty(field.getValue())) {
 			try {
-				Double.parseDouble(field.getValue());
+				Double.parseDouble(field.getValue().replaceAll(",", ""));
 			} catch (NumberFormatException e) {
 				errors.add(I18N.message("field.value.incorrect.1", I18N.message(messageKey)));
 			}

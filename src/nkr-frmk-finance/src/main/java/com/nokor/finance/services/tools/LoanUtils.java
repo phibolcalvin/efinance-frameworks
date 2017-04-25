@@ -27,6 +27,9 @@ public final class LoanUtils {
 		case W:
 			numberOfPeriods = termInMonth * 4;
 			break;
+		case B:
+			numberOfPeriods = termInMonth * 2;
+			break;
 		case M:
 			numberOfPeriods = termInMonth;
 			break;
@@ -55,6 +58,7 @@ public final class LoanUtils {
 		switch (frequency) {
 		case M:
 		case W:
+		case B:
 			nbOfMonths = 1;
 			break;
 		case Q:
@@ -82,6 +86,8 @@ public final class LoanUtils {
 		Date newInstallmentDate = null;
 		if (frequency == Frequency.W) {
 			newInstallmentDate = DateUtils.addDaysDate(installmentDate, 7);
+		} else if (frequency == Frequency.B) {
+			newInstallmentDate = DateUtils.addDaysDate(installmentDate, 14);
 		} else if (frequency == Frequency.D) {
 			newInstallmentDate = DateUtils.addDaysDate(installmentDate, 1);
 		} else {

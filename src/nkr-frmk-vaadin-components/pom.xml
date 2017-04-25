@@ -7,12 +7,12 @@
     <packaging>jar</packaging>
     <name>Nokor Framework Vaadin Components</name>
     <description>Nokor Framework Vaadin Components</description>
-    <version>1.7.0</version>
+    <version>1.7.1</version>
 
 	<parent>
 		<groupId>com.nokor.frmk</groupId>
 		<artifactId>nkr-frmk-parent</artifactId>
-		<version>1.7.0</version>
+		<version>1.7.1</version>
 	</parent>
 	
     <properties>

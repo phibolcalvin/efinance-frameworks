@@ -14,6 +14,7 @@ import org.seuksa.frmk.model.sysref.ISysRefData;
 public enum Frequency implements ISysRefData {
     D("daily"),
     W("weekly"),
+    B("bi.weekly"),
     M("monthly"),
     Q("quarterly"),
     H("half.year"),
@@ -56,6 +57,7 @@ public enum Frequency implements ISysRefData {
     	frequencies.add(M);
     	frequencies.add(Q);
     	frequencies.add(W);
+    	frequencies.add(B);
     	return frequencies;
     }
     
@@ -71,6 +73,7 @@ public enum Frequency implements ISysRefData {
 			return 6;
 		case M:
 		case W:
+		case B:
 			return 1;
 		case Q:
 			return 3;

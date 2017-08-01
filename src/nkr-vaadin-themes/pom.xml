@@ -7,12 +7,12 @@
     <packaging>jar</packaging>
     <name>Nokor Vaadin Themes</name>
     <description>Nokor Vaadin Themes</description>
-    <version>1.7.1</version>
+    <version>1.7.2</version>
 
 	<parent>
 		<groupId>com.nokor.frmk</groupId>
 		<artifactId>nkr-frmk-parent</artifactId>
-		<version>1.7.1</version>
+		<version>1.7.2</version>
 	</parent>
 	
     <properties>

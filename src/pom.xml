@@ -6,19 +6,19 @@
 	<packaging>pom</packaging>
 	<name>Nokor Framework</name>
 	<description>Nokor Framework</description>
-	<version>1.7.1</version>
+	<version>1.7.2</version>
    
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<javaxservlet.version>3.0.1</javaxservlet.version><!-- Tomcat 8: Servlet 3.1.0, JSP : 2.3, EL: 3.0-->
 		<javax.el.version>2.2</javax.el.version><!-- needed by Hibernate Configuration Validation-->
 
-		<nkr-frmk-services.version>1.7.1</nkr-frmk-services.version>
-		<nkr-frmk-services-seuksa.version>1.7.1</nkr-frmk-services-seuksa.version>
-		<nkr-frmk-finance.version>1.7.1</nkr-frmk-finance.version>
-		<nkr-frmk-vaadin.version>1.7.1</nkr-frmk-vaadin.version>
-		<nkr-frmk-vaadin-components.version>1.7.1</nkr-frmk-vaadin-components.version>
-		<nkr-vaadin-themes.version>1.7.1</nkr-vaadin-themes.version>
+		<nkr-frmk-services.version>1.7.2</nkr-frmk-services.version>
+		<nkr-frmk-services-seuksa.version>1.7.2</nkr-frmk-services-seuksa.version>
+		<nkr-frmk-finance.version>1.7.2</nkr-frmk-finance.version>
+		<nkr-frmk-vaadin.version>1.7.2</nkr-frmk-vaadin.version>
+		<nkr-frmk-vaadin-components.version>1.7.2</nkr-frmk-vaadin-components.version>
+		<nkr-vaadin-themes.version>1.7.2</nkr-vaadin-themes.version>
 
 		<google-gson.version>2.2.4</google-gson.version>
 		<jibx.version>1.2.5</jibx.version>

@@ -80,6 +80,8 @@ public class GLFCalculatorImpl implements Calculator {
 			periodEndDate = LoanUtils.getNextInstallementDate(periodStartDate, calculationParameter.getFrequency());
 			
 			schedule.setN(i + 1);
+			schedule.setOriginNCap(schedule.getN());
+			schedule.setOriginNIap(schedule.getN());
 			schedule.setInstallmentDate(installmentDate);
 			schedule.setPeriodStartDate(periodStartDate);
 			schedule.setPeriodEndDate(DateUtils.addDaysDate(periodEndDate, -1));
@@ -110,6 +112,8 @@ public class GLFCalculatorImpl implements Calculator {
 				balanceAmount = 0.0;
 			}
 			schedule.setN(i + 1);
+			schedule.setOriginNCap(schedule.getN());
+			schedule.setOriginNIap(schedule.getN());
 			schedule.setInstallmentDate(installmentDate);
 			schedule.setPeriodStartDate(periodStartDate);
 			schedule.setPeriodEndDate(DateUtils.addDaysDate(periodEndDate, -1));

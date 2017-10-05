@@ -72,6 +72,8 @@ public interface BaseEntityService  {
 
     public void flush() throws DaoException;
     
+    public void close() throws DaoException;
+    
     public <T extends Entity> T getFirst(BaseCriteria criteria) throws DaoException;
 
     public long count(BaseCriteria criteria) throws DaoException;

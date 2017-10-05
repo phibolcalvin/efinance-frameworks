@@ -222,6 +222,14 @@ public abstract class BaseEntityServiceImpl implements BaseEntityService {
     public void flush() throws DaoException {
         getDao().flush();
     }
+    
+    /**
+     * @see org.seuksa.frmk.service.EntityService#close()
+     */
+    @Override
+    public void close() throws DaoException {
+        getDao().close();
+    }
 
     @Override
     @Transactional(readOnly = true)

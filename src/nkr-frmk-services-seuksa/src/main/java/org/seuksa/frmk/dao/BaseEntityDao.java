@@ -86,6 +86,8 @@ public interface BaseEntityDao {
     <T extends Entity> T getFirst(BaseCriteria criteria);
 
     void flush();
+    
+    void close();
 
     long count(BaseCriteria criteria);
 

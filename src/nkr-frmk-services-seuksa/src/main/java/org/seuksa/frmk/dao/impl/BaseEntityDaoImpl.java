@@ -275,6 +275,14 @@ public abstract class BaseEntityDaoImpl implements BaseEntityDao {
 	public void close() {
 		getCurrentSession().close();
 	}
+	
+	/**
+	 * @see org.seuksa.frmk.dao.EntityDao#close()
+	 */
+	@Override
+	public void clear() {
+		getCurrentSession().clear();
+	}
 
 	/**
 	 * @throws DaoException 

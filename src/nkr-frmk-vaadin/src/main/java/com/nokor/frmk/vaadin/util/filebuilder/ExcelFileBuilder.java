@@ -22,6 +22,9 @@ import org.seuksa.frmk.tools.DateUtils;
 import org.seuksa.frmk.tools.amount.Amount;
 
 import com.vaadin.data.Container;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Link;
+import com.vaadin.ui.NativeButton;
 
 /**
  * @author ky.nora
@@ -104,6 +107,15 @@ public class ExcelFileBuilder extends FileBuilder {
         	}
         	cell.setCellStyle(getAmountCellStyle(amountValue.getNbDecimal()));
             cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+        } else if (value instanceof Button) {
+            cell.setCellValue(((Button) value).getCaption());
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+        } else if (value instanceof NativeButton) {
+            cell.setCellValue(((NativeButton) value).getCaption());
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+        } else if (value instanceof Link) {
+            cell.setCellValue(((Link) value).getCaption());
+            cell.setCellType(Cell.CELL_TYPE_STRING);
         } else {
             cell.setCellValue(value.toString());
             cell.setCellType(Cell.CELL_TYPE_STRING);

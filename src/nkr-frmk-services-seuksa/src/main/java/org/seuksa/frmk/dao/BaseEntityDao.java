@@ -89,6 +89,8 @@ public interface BaseEntityDao {
     
     void close();
 
+    void clear();
+    
     long count(BaseCriteria criteria);
 
     int delete(BaseCriteria criteria);

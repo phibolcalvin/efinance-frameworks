@@ -79,7 +79,12 @@ public class EntityRefComboBox<T extends EntityRefA> extends ComboBox {
      */
     public void setSelectedEntity(T value) {
     	if (value != null) {
-    		setValue(value.getId().toString());
+    		if (!valueMap.containsKey(value.getId().toString())) {
+    			addItem(value.getId().toString());
+        		setItemCaption(value.getId().toString(), value.getDescEn());
+        		valueMap.put(value.getId().toString(), value);
+    		}
+    		setValue(value.getId().toString());	
     	} else {
     		setValue(null);
     	}

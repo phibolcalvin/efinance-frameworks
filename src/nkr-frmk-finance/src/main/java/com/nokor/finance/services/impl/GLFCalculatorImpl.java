@@ -42,7 +42,7 @@ public class GLFCalculatorImpl implements Calculator {
 	
 	/**
 	 * Get amortization schedule
-	 * @param startDate start date
+	 * @param startDate
 	 * @param firstInstallmentDate
 	 * @param calculationParameter
 	 * @return
@@ -70,14 +70,10 @@ public class GLFCalculatorImpl implements Calculator {
 		
 		for (int i = 0; i < numberOfPrincipalGracePeriods; i++) {
 			Schedule schedule = new Schedule();
-			if (i == 0) {
-				installmentDate = firstInstallmentDate;
-				periodStartDate = startDate;
-			} else {
-				installmentDate = LoanUtils.getNextInstallementDate(installmentDate, calculationParameter.getFrequency());
-			}
 			
-			periodEndDate = LoanUtils.getNextInstallementDate(periodStartDate, calculationParameter.getFrequency());
+			installmentDate = LoanUtils.getNextInstallementDate(firstInstallmentDate, i, calculationParameter.getFrequency());
+			periodStartDate = LoanUtils.getNextInstallementDate(startDate, i, calculationParameter.getFrequency());
+			periodEndDate = LoanUtils.getNextInstallementDate(startDate, (i + 1), calculationParameter.getFrequency());
 			
 			schedule.setN(i + 1);
 			schedule.setOriginNCap(schedule.getN());
@@ -89,21 +85,15 @@ public class GLFCalculatorImpl implements Calculator {
 			schedule.setInstallmentPayment(schedule.getInterestAmount());
 			schedule.setPrincipalAmount(0d);
 			schedule.setBalanceAmount(initialPrincipal);
-			schedules.add(schedule);			
-			periodStartDate = periodEndDate;
+			schedules.add(schedule);		
 		}
 		
 		for (int i = numberOfPrincipalGracePeriods; i < numberOfPeriods; i++) {
 			Schedule schedule = new Schedule();
 			
-			if (i == 0) {
-				installmentDate = firstInstallmentDate;
-				periodStartDate = startDate;
-			} else {
-				installmentDate = LoanUtils.getNextInstallementDate(installmentDate, calculationParameter.getFrequency());
-			}
-			
-			periodEndDate = LoanUtils.getNextInstallementDate(periodStartDate, calculationParameter.getFrequency());
+			installmentDate = LoanUtils.getNextInstallementDate(firstInstallmentDate, i, calculationParameter.getFrequency());
+			periodStartDate = LoanUtils.getNextInstallementDate(startDate, i, calculationParameter.getFrequency());
+			periodEndDate = LoanUtils.getNextInstallementDate(startDate, (i + 1), calculationParameter.getFrequency());
 			
 			double interestAmount =  initialPrincipal * irrRate;
 			double principalAmount = installmentPayment - interestAmount;
@@ -123,8 +113,6 @@ public class GLFCalculatorImpl implements Calculator {
 			schedule.setBalanceAmount(balanceAmount);
 			initialPrincipal = balanceAmount;
 			schedules.add(schedule);
-			
-			periodStartDate = periodEndDate;
 		}
 		
 		amortizationSchedules.setIrrRate(irrRate);

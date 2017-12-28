@@ -96,4 +96,25 @@ public final class LoanUtils {
 		}
 		return newInstallmentDate;
 	}
+	
+	/**
+	 * 
+	 * @param firstInstallmentDate
+	 * @param numInstallment
+	 * @param frequency
+	 * @return
+	 */
+	public static Date getNextInstallementDate(Date firstInstallmentDate, int numInstallment, Frequency frequency) {
+		Date newInstallmentDate = null;
+		if (frequency == Frequency.W) {
+			newInstallmentDate = DateUtils.addDaysDate(firstInstallmentDate, numInstallment * 7);
+		} else if (frequency == Frequency.B) {
+			newInstallmentDate = DateUtils.addDaysDate(firstInstallmentDate, numInstallment * 14);
+		} else if (frequency == Frequency.D) {
+			newInstallmentDate = DateUtils.addDaysDate(firstInstallmentDate, numInstallment * 1);
+		} else {
+			newInstallmentDate = DateUtils.addMonthsDate(firstInstallmentDate, numInstallment * LoanUtils.getNbOfMonth(frequency));
+		}
+		return newInstallmentDate;
+	}
 }

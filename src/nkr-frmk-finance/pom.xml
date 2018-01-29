@@ -9,12 +9,12 @@
     <packaging>jar</packaging>
     <name>Nokor Framework Finance</name>
     <description>Nokor Framework Finance</description>
-	<version>1.7.3</version>
+	<version>1.7.4</version>
 
 	<parent>
 		<groupId>com.nokor.frmk</groupId>
 		<artifactId>nkr-frmk-parent</artifactId>
-		<version>1.7.3</version>
+		<version>1.7.4</version>
 	</parent>
     
 	<repositories/> 

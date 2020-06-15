@@ -24,7 +24,7 @@
 		<jibx.version>1.2.5</jibx.version>
 		
 		<commons-logging.version>1.2</commons-logging.version>
-		<commons-collections.version>3.2.1</commons-collections.version>
+		<commons-collections.version>3.2.2</commons-collections.version>
 		<commons-lang.version>2.6</commons-lang.version>
 		<!--<commons-math3.version>3.0</commons-math3.version>-->
 		<commons-io.version>2.4</commons-io.version>

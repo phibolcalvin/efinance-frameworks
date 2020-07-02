@@ -55,7 +55,7 @@
 		<jasypt-springsecurity3.version>1.9.2</jasypt-springsecurity3.version>
 		<jasypt-hibernate4.version>1.9.2</jasypt-hibernate4.version>
 		
-		<mysql.version>5.1.32</mysql.version>
+		<mysql.version>8.0.16</mysql.version>
 		<postgres.version>9.1-901-1.jdbc4</postgres.version>
 
         <thoughtworks-xstream.version>1.3.1</thoughtworks-xstream.version>

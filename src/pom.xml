@@ -39,7 +39,7 @@
 
 		<struts2.version>2.3.16.3</struts2.version>
 
-		<spring-framework.version>4.1.0.RELEASE</spring-framework.version> <!-- 3.2.8.RELEASE last version of 3.x.y --> 
+		<spring-framework.version>5.2.22.RELEASE</spring-framework.version> <!-- 3.2.8.RELEASE last version of 3.x.y --> 
 		<spring-batch.version>3.0.1.RELEASE</spring-batch.version>	 
 		<spring-security.version>3.2.5.RELEASE</spring-security.version>	 
 		<spring-mobile.version>1.1.2.RELEASE</spring-mobile.version>	 

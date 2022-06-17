@@ -68,7 +68,7 @@
         <json-lib.version>2.4</json-lib.version>
 		<velocity.version>1.6.2</velocity.version>
 
-		<jboss.drools.version>6.1.0.Final</jboss.drools.version>
+		<jboss.drools.version>7.60.0.Final</jboss.drools.version>
 
 		<log4j.version>1.2.17</log4j.version>
 		<slf4j.version>1.7.7</slf4j.version>
